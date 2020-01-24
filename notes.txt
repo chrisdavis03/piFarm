@@ -1,0 +1,38 @@
+https://danidee10.github.io/2016/09/24/flask-by-example-3.html
+    ---had issue with this one as its built on other examples
+    ---need to take a step back and build out the database model, for instances.
+    ---it does make some sense how, templating and static assests work though!:)
+
+
+https://danidee10.github.io/2016/09/19/flask-by-example-2.html
+    ---more "models", man this is irritating for a basic example. I think I want to stick with the standard SQLite3 method for now. Gotta learn those lessons.
+    --What does it mean to make a "model"?
+        This seems to hold true to the Django method as well. Models are just class representations of tables and fields in your database.
+        Where the class represents the table and the attributes in the class represent fields.
+
+https://ondras.zarovi.cz/sql/demo/?keyword=default
+    ---cool relational database design tool.
+
+
+Database. For the voter app. We will create a SQLite3 DB called votr.db with 3 tables. options, topics and polls.
+The polls table will combine/reference the topics (or questions), and the options (or possible answers to the questions.)
+
+?If the polls table only has fields: id, topic_id, option_id. How do we reference more than one option in a poll? Seems important when giving users a choice.
+    The illustrates my point about NOT using a framework until you fully understand how things work. This scenarios describes database relationships. Where, in certain situations, we can have many relationships to one field.
+    One to one relationships (1-1):
+        !! elaborate here !!
+    One to many relationships (1-M):
+        !! elaborate here !!
+    Many to Many relationships (M-M):
+        !! elaborate here !!
+
+    In the example of the voter app. We will use M-M relationships because any option could be used in any topic. For example "Who do you like better? David Foster Wallace or Thomas Pynchon?" with DFW and TP as options to the topics.
+    AND "Who do you like better? David Foster Wallace or John Steinbeck" with DFW and JS as options.
+        Could this be wrong? Is this not a 1-M relationship? Either way, lets continue.
+
+
+    *We created this in createVOTR function of db.py
+
+    Adding the UNIQUE identifier to any data type in SQL will stop users from signing up under the same email twice. However, we need to be able to handle this error. Currently the app crashes when we signup with the same email twice.
+
+    SQLite3 does not have error reporting. So its gonna be tough to handle errors.

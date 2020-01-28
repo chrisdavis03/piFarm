@@ -32,7 +32,7 @@
 
             {% if session.get('user') %}
             <li class="welcome-message">Hey {{ session['user']}}!</li>
-              <li role="presentation"><a href="{{ url_for('logout') }}">Logout</a></li>
+              <li role="presentation"><a href="{{ url_for('home') }}">Home</a></li>
             {% endif %}
           </ul>
         </nav>
@@ -42,7 +42,14 @@
       <div class="row marketing">
         <div class="col-lg-6">
           <h3>Current Schedule</h3>
-          <p></p>
+          <p>
+            <div>
+            On time:{{start_time}}
+            </div>
+            <div>
+            Off time:{{end_time}}
+            </div>
+          </p>
         </div>
 
         <div class="col-lg-6">

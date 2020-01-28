@@ -25,7 +25,6 @@ def signup():
 
         # hash the password
         password = generate_password_hash(password)
-
         error = db.votr_UserSignup(email, username, password)
         if error > 0:
             flash("Email is already in use. ")
@@ -61,9 +60,15 @@ def login():
 
     return redirect(url_for('home'))
 
-@votr.route('/schedule')
+@votr.route('/schedule', methods=['GET', 'POST'])
 def schedule():
-    return render_template('schedule.html')
+    schedule = db.schedule_lookup()
+    date_mod, start_time, end_time = schedule[0]
+    if request.method == 'POST':
+        #todo - create schedule record
+        return render_template('schedule.html', date_mod=date_mod, start_time=start_time, end_time=end_time)
+    else:
+        return render_template('schedule.html', date_mod=date_mod, start_time=start_time, end_time=end_time)
 
 if __name__ == '__main__':
     votr.run(host='0.0.0.0')

@@ -11,7 +11,7 @@ def createVOTR():
                      (id INT PRIMARY KEY, name TEXT NOT NULL)''')
 
     c.execute('''CREATE TABLE polls
-                     (id INT PRIMARY KEY, topic_id INT, option_id INT, 
+                     (id INT PRIMARY KEY, topic_id INT, option_id INT,
                      FOREIGN KEY(topic_id) REFERENCES topics(id),
                      FOREIGN KEY(option_id) REFERENCES options(id))''')
 
@@ -48,6 +48,16 @@ def votr_Userlookup(email):
 
     conn.close()
     return user[0][0], user[0][1]
+
+def schedule_lookup():
+    conn = sqlite3.connect('piplant.db')
+    c = conn.cursor()
+
+    c.execute('''SELECT date_mod, start_time, end_time FROM schedule ORDER BY date_mod DESC LIMIT 1;''')
+    schedule = c.fetchall()
+
+    conn.close()
+    return schedule
 if __name__ == "__main__":
-    #createVOTR()
+    #print (schedule_lookup())
     pass

@@ -66,7 +66,11 @@ def schedule():
     date_mod, start_time, end_time = schedule[0]
     if request.method == 'POST':
         #todo - create schedule record
-        return render_template('schedule.html', date_mod=date_mod, start_time=start_time, end_time=end_time)
+        new_start_time = request.form['start_time']
+        new_end_time = request.form['end_time']
+
+        db.schedule_update(new_start_time, new_end_time)
+        return render_template('schedule.html', date_mod=date_mod, start_time=new_start_time, end_time=new_end_time)
     else:
         return render_template('schedule.html', date_mod=date_mod, start_time=start_time, end_time=end_time)
 

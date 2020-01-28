@@ -58,6 +58,15 @@ def schedule_lookup():
 
     conn.close()
     return schedule
+
+def schedule_update(start_time, end_time):
+    conn = sqlite3.connect('piplant.db')
+    c = conn.cursor()
+
+    c.execute('''INSERT INTO schedule (date_mod, start_time, end_time) VALUES (datetime('now'), ?,?);''', (start_time, end_time))
+    conn.commit()
+    conn.close()
+
 if __name__ == "__main__":
     #print (schedule_lookup())
     pass

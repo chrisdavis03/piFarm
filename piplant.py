@@ -34,9 +34,9 @@ def signup():
 
     return render_template('signup.html')
 
-@votr.route('/polls')
-def polls():
-    return render_template('polls.html')
+@votr.route('/lights', methods=['GET','POST'])
+def lights():
+    pass
 
 @votr.route('/login', methods=['POST'])
 def login():
@@ -61,10 +61,9 @@ def login():
 
     return redirect(url_for('home'))
 
-@votr.route('/')
+@votr.route('/schedule')
 def schedule():
-    pass
-    #return render_template('index.html')
+    return render_template('schedule.html')
 
 if __name__ == '__main__':
     votr.run(host='0.0.0.0')

@@ -45,7 +45,6 @@ def votr_Userlookup(email):
 
     c.execute('''SELECT user, password FROM users WHERE email = (?)''',[email])
     user = c.fetchall()
-
     conn.close()
     return user[0][0], user[0][1]
 
@@ -68,5 +67,4 @@ def schedule_update(start_time, end_time):
     conn.close()
 
 if __name__ == "__main__":
-    #print (schedule_lookup())
     pass

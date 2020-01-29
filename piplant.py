@@ -4,6 +4,7 @@ from flask import (
 #from models import db
 import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime, time
 
 votr = Flask(__name__)
 #todo - secure the secret key.
@@ -63,14 +64,22 @@ def login():
 @votr.route('/schedule', methods=['GET', 'POST'])
 def schedule():
     schedule = db.schedule_lookup()
-    date_mod, start_time, end_time = schedule[0]
+    try:
+        date_mod, start_time, end_time = schedule[0]
+    except:
+        date_mod, start_time, end_time = '','',''
     if request.method == 'POST':
         #todo - create schedule record
         new_start_time = request.form['start_time']
         new_end_time = request.form['end_time']
+        try:
+            start_time = time.strftime(new_start_time,'%H:%M:%S')
+            end_time = time.strftime(new_end_time,'%H:%M:%S')
+        except:
+            flash("**Time not entered in military time")
+        db.schedule_update(start_time, end_time)
+        return render_template('schedule.html', date_mod=date_mod, start_time=start_time, end_time=end_time)
 
-        db.schedule_update(new_start_time, new_end_time)
-        return render_template('schedule.html', date_mod=date_mod, start_time=new_start_time, end_time=new_end_time)
     else:
         return render_template('schedule.html', date_mod=date_mod, start_time=start_time, end_time=end_time)
 

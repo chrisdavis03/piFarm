@@ -49,7 +49,7 @@ def votr_Userlookup(email):
     return user[0][0], user[0][1]
 
 def schedule_lookup():
-    conn = sqlite3.connect('piplant.db')
+    conn = sqlite3.connect('./piplant.db')
     c = conn.cursor()
 
     c.execute('''SELECT date_mod, start_time, end_time FROM schedule ORDER BY date_mod DESC LIMIT 1;''')
@@ -59,7 +59,7 @@ def schedule_lookup():
     return schedule
 
 def schedule_update(start_time, end_time):
-    conn = sqlite3.connect('piplant.db')
+    conn = sqlite3.connect('./piplant.db')
     c = conn.cursor()
 
     c.execute('''INSERT INTO schedule (date_mod, start_time, end_time) VALUES (datetime('now'), ?,?);''', (start_time, end_time))

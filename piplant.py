@@ -72,13 +72,19 @@ def schedule():
         #todo - create schedule record
         new_start_time = request.form['start_time']
         new_end_time = request.form['end_time']
-        try:
-            start_time = time.strftime(new_start_time,'%H:%M:%S')
-            end_time = time.strftime(new_end_time,'%H:%M:%S')
-        except:
-            flash("**Time not entered in military time")
-        db.schedule_update(start_time, end_time)
+
+        validate_start_time = datetime.strptime(new_start_time, '%H:%M')
+        validate_end_time = datetime.strptime(new_end_time, '%H:%M')
+
+        if validate_start_time < validate_end_time:
+            db.schedule_update(new_start_time, new_end_time)
+            return render_template('schedule.html', date_mod=date_mod, start_time=new_start_time, end_time=new_end_time)
+        else:
+            flash("**Start time must be earlier than end time.")
         return render_template('schedule.html', date_mod=date_mod, start_time=start_time, end_time=end_time)
+
+
+
 
     else:
         return render_template('schedule.html', date_mod=date_mod, start_time=start_time, end_time=end_time)
